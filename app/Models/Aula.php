@@ -9,12 +9,14 @@ class Aula extends Model
 {
     use HasFactory;
 
-    // Campos permitidos para insertar/actualizar
-    protected $fillable = ['nro_aula', 'capacidad', 'piso', 'disponible'];
+    protected $fillable = [
+        'nombre',
+        'capacidad',
+    ];
 
-    // Relación con horarios
+    // Relación: un aula puede tener muchos horarios
     public function horarios()
     {
-        return $this->hasMany(Horario::class);
+        return $this->hasMany(Horario::class, 'aula_id');
     }
 }

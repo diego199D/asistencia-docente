@@ -2,90 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Asistencia;
-use App\Models\Horario;
 use Illuminate\Http\Request;
+use App\Models\Asistencia;
+use Illuminate\Support\Facades\Auth;
 
 class AsistenciaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        // Mostrar las asistencias del usuario logueado
+        $asistencias = Asistencia::where('id_usuario', Auth::id())
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return view('asistencias.index', compact('asistencias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function marcarAsistencia(Request $request)
     {
-        //
-    }
+        $usuario = Auth::user();
+        $hoy = now()->toDateString();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Evitar duplicado de asistencia diaria
+        $yaMarcado = Asistencia::where('id_usuario', $usuario->id)
+            ->where('fecha', $hoy)
+            ->exists();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Asistencia  $asistencia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Asistencia $asistencia)
-    {
-        //
-    }
+        if ($yaMarcado) {
+            return redirect()->back()->with('info', 'Ya marcaste tu asistencia hoy.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Asistencia  $asistencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Asistencia $asistencia)
-    {
-        //
-    }
+        // Registrar nueva asistencia
+        Asistencia::create([
+            'id_usuario' => $usuario->id,
+            'fecha' => $hoy,
+            'hora_marcado' => now()->toTimeString(),
+            'estado' => 'Presente',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Asistencia  $asistencia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Asistencia $asistencia)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Asistencia  $asistencia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Asistencia $asistencia)
-    {
-        //
-    }
-
-    public function horario()
-    {
-        return $this->belongsTo(Horario::class);
+        return redirect()->back()->with('success', 'Asistencia registrada correctamente.');
     }
 }

@@ -9,13 +9,12 @@ class Rol extends Model
 {
     use HasFactory;
 
-    protected $table = 'rols'; // 👈 asegúrate que tu tabla se llame así
+    protected $table = 'rols';
     protected $fillable = ['nombre'];
 
-    public function run():void{
-        $nombres = ['administrador', 'docente', 'trabajador'];
-        foreach($nombres as $nombre){
-            Rol::create(['nombre' => $nombre]);
-        }
+    // Relación inversa con usuarios
+    public function usuarios()
+    {
+        return $this->hasMany(User::class, 'id_rol');
     }
 }

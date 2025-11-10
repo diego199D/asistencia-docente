@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Asistencia extends Model
 {
     use HasFactory;
-    protected $fillable = ['fecha', 'estado', 'horario_id'];
 
-    public function horario()
+    protected $table = 'asistencias';
+
+    protected $fillable = [
+        'id_usuario',
+        'fecha',
+        'hora_marcado',
+        'estado',
+    ];
+
+    public function usuario()
     {
-        return $this->belongsTo(Horario::class);
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }

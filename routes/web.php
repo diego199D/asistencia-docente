@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\HistorialAsistenciaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\MateriaController;
@@ -98,8 +100,17 @@ Route::get('/mis-horarios', [MiHorarioController::class, 'index'])
 
 
 //asistencias
-Route::get('/asistencias', [AsistenciaController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('asistencias');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/asistencias', [AsistenciaController::class, 'index'])->name('asistencias.index');
+    Route::post('/asistencias/marcar', [AsistenciaController::class, 'marcarAsistencia'])->name('asistencias.marcar');});
     // aulas 
 Route::get('/aulas', [AulaController::class, 'index'])->name('aulas.index');
+// historial asistencia//
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/historial-asistencias', [HistorialAsistenciaController::class, 'index'])->name('historial.asistencias');
+});
+// ======= reportes =======
+
+Route::get('/reportes', [ReporteController::class, 'index'])
+    ->name('reportes')
+    ->middleware(['auth', 'role:administrador']);

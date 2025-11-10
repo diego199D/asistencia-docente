@@ -20,6 +20,7 @@
             margin: 0;
         }
 
+        /* Sidebar */
         .sidebar {
             width: 240px;
             height: 100vh;
@@ -67,6 +68,7 @@
             margin-right: 10px;
         }
 
+        /* Topbar */
         .topbar {
             height: 60px;
             background: white;
@@ -79,6 +81,7 @@
             z-index: 10;
         }
 
+        /* Contenido */
         .content {
             margin-left: 240px;
             padding: 30px;
@@ -109,14 +112,14 @@
             <p>Facultad de Ciencias de la Computación y Telecomunicaciones</p>
         </div>
 
-        {{-- Opciones solo para Administrador --}}
+        {{-- OPCIONES SOLO PARA ADMINISTRADOR --}}
         @if (Auth::user()->id_rol == 1)
             <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-speedometer2"></i> Dashboard
             </a>
 
             <a href="{{ route('docentes.index') }}" class="{{ request()->routeIs('docentes.index') ? 'active' : '' }}">
-                <i class="bi bi-people-fill"></i> Gestión Docentes
+                <i class="bi bi-people-fill"></i> Gestión Usuario
             </a>
 
             <a href="{{ route('materias.index') }}" class="{{ request()->routeIs('materias.*') ? 'active' : '' }}">
@@ -135,20 +138,22 @@
                 <i class="bi bi-graph-up"></i> Reportes
             </a>
 
-            <!-- ✅ NUEVO BOTÓN DE AULAS -->
             <a href="{{ route('aulas.index') }}" class="{{ request()->routeIs('aulas.index') ? 'active' : '' }}">
                 <i class="bi bi-building"></i> Aulas
             </a>
-            <!-- 🔚 FIN NUEVO BOTÓN -->
+
+            <a href="{{ route('historial.asistencias') }}" class="{{ request()->routeIs('historial.asistencias') ? 'active' : '' }}">
+                <i class="bi bi-clock-history"></i> Historial Asistencias
+            </a>
         @endif
 
-        {{-- Opciones solo para Docente --}}
+        {{-- OPCIONES SOLO PARA DOCENTE --}}
         @if (Auth::user()->id_rol == 2)
             <a href="{{ route('mis-horarios') }}" class="{{ request()->routeIs('mis-horarios') ? 'active' : '' }}">
                 <i class="bi bi-calendar3"></i> Mis Horarios
             </a>
 
-            <a href="#" class="#">
+            <a href="{{ route('asistencias.index') }}" class="{{ request()->routeIs('asistencias.*') ? 'active' : '' }}">
                 <i class="bi bi-check2-square"></i> Asistencia
             </a>
         @endif

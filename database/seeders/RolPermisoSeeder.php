@@ -15,18 +15,27 @@ class RolPermisoSeeder extends Seeder
     public function run()
     {
         $rol_permisos=[
-            ['id_rol'=>1,'id_permiso'=>1],
-            ['id_rol'=>1,'id_permiso'=>2],
-            ['id_rol'=>1,'id_permiso'=>3],
-            ['id_rol'=>1,'id_permiso'=>4],
-            ['id_rol'=>1,'id_permiso'=>5],
-            ['id_rol'=>1,'id_permiso'=>6],
-            ['id_rol'=>1,'id_permiso'=>7],
+            ['id_rol'=> 1, 'id_permiso'=>1],
+            ['id_rol'=> 1, 'id_permiso'=>2],
+            ['id_rol'=> 1, 'id_permiso'=>3],
+            ['id_rol'=> 1, 'id_permiso'=>4],
+            ['id_rol'=> 1, 'id_permiso'=>5],
+            ['id_rol'=> 1, 'id_permiso'=>6],
+            ['id_rol'=> 1, 'id_permiso'=>7],
+            
+            ['id_rol'=> 2, 'id_permiso'=>4],
+            ['id_rol'=> 2, 'id_permiso'=>5],
+            ['id_rol'=> 2, 'id_permiso'=>6],
+            ['id_rol'=> 2, 'id_permiso'=>7],
+            
+               ['id_rol'=> 3, 'id_permiso'=>4],
+            ['id_rol'=> 3, 'id_permiso'=>5],
+            ['id_rol'=> 3, 'id_permiso'=>6],
 
-            ['id_rol'=>2,'id_permiso'=>4],
-            ['id_rol'=>2,'id_permiso'=>5],
-            ['id_rol'=>2,'id_permiso'=>6],
-            ['id_rol'=>2,'id_permiso'=>7],
+               ['id_rol'=> 4, 'id_permiso'=>4],
+            ['id_rol'=> 4, 'id_permiso'=>5],
+            ['id_rol'=> 4, 'id_permiso'=>6],
+            ['id_rol'=> 4, 'id_permiso'=>7],
         ];
         foreach ($rol_permisos as $rol_permiso) {
             RolPermiso::create([
